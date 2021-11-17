@@ -37,10 +37,37 @@ const movieSchema = new mongoose.Schema({
 
 const movieModel = mongoose.model('martin', movieSchema);
 
+app.get('/api/movies/:id',(req, res)=>{
+    console.log(req.params.id);
+
+    movieModel.findById(req.params.id,(error,data)=>{
+        res.json(data);
+    })
+})
+
+
+app.put('/api/movies/:id', (req, res)=>{
+    console.log('Updating: '+req.params.id)
+ 
+    movieModel.findByIdAndUpdate(req.params.id, req.body, {new:true},
+        (err, data)=>{
+            res.send(data);
+        })
+})
+
+
+
+
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
+
+
+
+
+
 
 app.post('/api/movies', (req,res)=>{
     console.log(req.body);
